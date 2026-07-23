@@ -1,0 +1,12 @@
+# Python environment
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment / Secrets
+.env
+.streamlit/secrets.toml
+
+# Vector Database cache
+chroma_db/

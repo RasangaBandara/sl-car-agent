@@ -1,0 +1,4 @@
+Used Vehicle Market Depreciation Rates (Sri Lanka):
+- Average yearly depreciation for Japanese brands (Toyota, Honda, Nissan) is 5% - 8% per annum.
+- High-mileage threshold in Sri Lanka is defined as >15,000 KM per year of vehicle age.
+- Vehicles with active leasing liabilities require a formal clearance letter from the bank prior to transfer of ownership.
