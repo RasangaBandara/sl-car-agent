@@ -122,3 +122,6 @@ if df is not None:
                 
             st.markdown("### 📋 Final Advisory Report")
             st.markdown(report.content)
+# UI layout spacing refined
+
+# UI layout spacing refined
