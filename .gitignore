@@ -10,3 +10,4 @@ venv/
 
 # Vector Database cache
 chroma_db/
+# Local env cache
