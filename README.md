@@ -25,3 +25,5 @@ An intelligent Agentic RAG system built to assist with real-world SME vehicle va
    ```bash
    git clone [https://github.com/RasangaBandara/sl-car-agent.git](https://github.com/RasangaBandara/sl-car-agent.git)
    cd sl-car-agent
+
+## Agent System Details
