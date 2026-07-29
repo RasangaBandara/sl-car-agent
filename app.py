@@ -50,8 +50,54 @@ df = load_car_data()
 
 if df is not None:
     st.sidebar.success(f"Loaded {len(df):,} listings!")
-    with st.expander("🔍 Preview Car Dataset"):
-        st.dataframe(df.head(10))
+    
+    with st.expander("🔍 Preview & Search Car Dataset", expanded=True):
+        # 1. Filter UI Row
+        f1, f2, f3, f4 = st.columns(4)
+        
+        with f1:
+            preview_brands = ["ALL"] + sorted(df['Brand'].dropna().astype(str).unique().tolist())
+            p_brand = st.selectbox("Filter Brand", preview_brands, key="p_brand")
+            
+        with f2:
+            if p_brand != "ALL":
+                models_available = sorted(df[df['Brand'] == p_brand]['Model'].dropna().astype(str).unique().tolist())
+                preview_models = ["ALL"] + models_available
+            else:
+                preview_models = ["ALL"] + sorted(df['Model'].dropna().astype(str).unique().tolist())
+            p_model = st.selectbox("Filter Model", preview_models, key="p_model")
+            
+        with f3:
+            min_yom = int(df['YOM'].min()) if 'YOM' in df.columns else 2000
+            max_yom = int(df['YOM'].max()) if 'YOM' in df.columns else 2026
+            p_yom = st.slider("Filter YOM", min_value=min_yom, max_value=max_yom, value=(min_yom, max_yom), key="p_yom")
+            
+        with f4:
+            if 'Price' in df.columns:
+                min_p = float(df['Price'].min())
+                max_p = float(df['Price'].max())
+                p_price = st.slider("Price Range (Lakhs)", min_value=min_p, max_value=max_p, value=(min_p, max_p), key="p_price")
+            else:
+                p_price = None
+
+        # 2. Dynamic Filtering Logic
+        preview_df = df.copy()
+        
+        if p_brand != "ALL":
+            preview_df = preview_df[preview_df['Brand'] == p_brand]
+            
+        if p_model != "ALL":
+            preview_df = preview_df[preview_df['Model'] == p_model]
+            
+        if 'YOM' in preview_df.columns:
+            preview_df = preview_df[(preview_df['YOM'] >= p_yom[0]) & (preview_df['YOM'] <= p_yom[1])]
+            
+        if p_price is not None and 'Price' in preview_df.columns:
+            preview_df = preview_df[(preview_df['Price'] >= p_price[0]) & (preview_df['Price'] <= p_price[1])]
+
+        # 3. Display Results
+        st.write(f"Showing **{len(preview_df):,}** matching vehicles:")
+        st.dataframe(preview_df, height=350, use_container_width=True)
 
 # Tools
 def market_data_tool(brand: str, model: str, yom: int):
@@ -122,8 +168,3 @@ if df is not None:
                 
             st.markdown("### 📋 Final Advisory Report")
             st.markdown(report.content)
-# UI layout spacing refined
-
-# UI layout spacing refined
-
-# Verified agent orchestration logic
